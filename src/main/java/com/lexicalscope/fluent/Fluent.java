@@ -1,11 +1,13 @@
 package com.lexicalscope.fluent;
 
+import com.lexicalscope.fluent.map.DefaultMapEntry;
+import com.lexicalscope.fluent.map.FluentMap;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.lexicalscope.fluent.map.FluentMap;
+import java.util.Map.Entry;
 
 /*
  * Copyright 2012 Tim Wood
@@ -36,4 +38,9 @@ public class Fluent {
     public <V> List<V> list(final Class<V> value) {
         return new ArrayList<V>();
     }
+
+   public <K, V> Entry<K, V> mapEntry(final K key, final V value)
+   {
+      return new DefaultMapEntry<K, V>(key, value);
+   }
 }

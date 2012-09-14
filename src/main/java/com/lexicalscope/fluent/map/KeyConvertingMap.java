@@ -1,10 +1,10 @@
 package com.lexicalscope.fluent.map;
 
+import ch.lambdaj.function.convert.Converter;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-
-import ch.lambdaj.function.convert.Converter;
 
 /*
  * Copyright 2012 Tim Wood
@@ -21,18 +21,15 @@ import ch.lambdaj.function.convert.Converter;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class KeyConvertingMap<K, L, V> implements Map<K, V> {
-    private final Map<L, V> map;
-    private final Converter<L, K> forward;
-    private final Converter<K, L> reverse;
+public class KeyConvertingMap<K, KO, V> extends AbstractConverting<K, KO> implements Map<K, V> {
+    private final Map<KO, V> map;
 
     public KeyConvertingMap(
-            final Map<L, V> map,
-            final Converter<L, K> forward,
-            final Converter<K, L> reverse) {
-                this.map = map;
-                this.forward = forward;
-                this.reverse = reverse;
+            final Map<KO, V> map,
+            final Converter<KO, K> forward,
+            final Converter<K, KO> reverse) {
+       super(forward, reverse);
+       this.map = map;
     }
 
     public int size() {
@@ -74,7 +71,7 @@ public class KeyConvertingMap<K, L, V> implements Map<K, V> {
     }
 
     public Set<K> keySet() {
-        return new ConvertingSet<K, L>(map.keySet(), forward, reverse);
+        return new ConvertingSet<K, KO>(map.keySet(), forwardConverter(), reverseConverter());
     }
 
     public Collection<V> values() {
@@ -83,11 +80,10 @@ public class KeyConvertingMap<K, L, V> implements Map<K, V> {
     }
 
     public Set<java.util.Map.Entry<K, V>> entrySet() {
-        // TODO Auto-generated method stub
-        return null;
+       return new ConvertingSet<java.util.Map.Entry<K, V>, java.util.Map.Entry<KO, V>>(map.entrySet(), new EntryKeyConvertor<K, KO, V>(forwardConverter(), reverseConverter()), new EntryKeyConvertor<KO, K, V>(reverseConverter(), forwardConverter()));
     }
 
-    private L convertFromKey(final Object key) {
-        return reverse.convert((K) key);
+    private KO convertFromKey(final Object key) {
+        return reverseConvert((K) key);
     }
 }

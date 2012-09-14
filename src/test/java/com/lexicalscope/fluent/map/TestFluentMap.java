@@ -6,8 +6,6 @@ import static com.lexicalscope.fluent.StringConverters.reverseString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-import java.util.Map;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -72,24 +70,23 @@ public class TestFluentMap
 
       assertThat(underlyingMap, hasValue("value1"));
       assertThat(convertedMap, hasValue("1eulav"));
+      assertThat(convertedMap, hasEntry("newKey", "1eulav"));
+   }
 
-      convertedMap.entrySet().add(new Map.Entry<String, String>()
-      {
+   @Test
+   public void canAddValuesToABothWaysKeyConvertedMap()
+   {
+      final FluentMap<String, String> underlyingMap = $.map(String.class, String.class);
+      final FluentMap<String, String> convertedMap = underlyingMap.$convertKey(reverseString(), reverseString());
 
-         public String setValue(final String value)
-         {
-            return null;
-         }
+      convertedMap.put("yek", "value1");
 
-         public String getValue()
-         {
-            return null;
-         }
+      assertThat(underlyingMap, hasValue("value1"));
+      assertThat(underlyingMap, hasKey("key"));
+      assertThat(underlyingMap, hasEntry("key", "value1"));
 
-         public String getKey()
-         {
-            return null;
-         }
-      })
+      assertThat(convertedMap, hasValue("value1"));
+      assertThat(convertedMap, hasKey("yek"));
+      assertThat(convertedMap, hasEntry("yek", "value1"));
    }
 }
