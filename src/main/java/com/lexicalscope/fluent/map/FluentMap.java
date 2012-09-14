@@ -2,15 +2,14 @@ package com.lexicalscope.fluent.map;
 
 import static com.google.common.collect.Maps.filterKeys;
 import static com.lexicalscope.fluent.Fluent.$;
-
-import java.util.Map;
-
-import org.hamcrest.Matcher;
-
 import ch.lambdaj.function.convert.Converter;
 
 import com.google.common.collect.ForwardingMap;
 import com.google.common.collect.Maps;
+
+import java.util.Map;
+
+import org.hamcrest.Matcher;
 
 /*
  * Copyright 2012 Tim Wood
@@ -65,6 +64,10 @@ public class FluentMap<K, V> extends ForwardingMap<K, V>{
             }
         }));
     }
+
+    public <W> FluentMap<K, W> $convertValues(final Converter<V, W> forwardConverter, final Converter<W, V> reverseConverter) {
+       return $(new ValueConvertingMap<K,W,V>(delegate(), forwardConverter, reverseConverter));
+   }
 
     public <L> FluentMap<L, V> $convertKey(
             final Converter<K, L> forward,

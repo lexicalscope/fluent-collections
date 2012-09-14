@@ -6,7 +6,11 @@ import static com.lexicalscope.fluent.StringConverters.reverseString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+import java.util.Map;
+
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /*
  * Copyright 2012 Tim Wood
@@ -23,26 +27,69 @@ import org.junit.Test;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class TestFluentMap {
-    @Test public void canFilterMapKeys() {
-        final FluentMap<String, String> filteredMap = $.map(String.class, String.class).
-            $put("key1", "value1").
-            $put("key2", "value2").
-            $filter(equalTo("key1"));
+public class TestFluentMap
+{
+   @Rule
+   public final ExpectedException exception = ExpectedException.none();
 
-        assertThat(filteredMap, mapHasSize(1));
-        assertThat(filteredMap, hasKey("key1"));
-        assertThat(filteredMap, not(hasKey("key2")));
-    }
+   @Test
+   public void canFilterMapKeys()
+   {
+      final FluentMap<String, String> filteredMap = $.map(String.class, String.class).$put("key1", "value1").$put("key2", "value2").$filter(equalTo("key1"));
 
-    @Test public void canConvertMapValues() {
-        final FluentMap<String, String> convertedMap = $.map(String.class, String.class).
-                $put("key1", "value1").
-                $put("key2", "value2").
-                $convertValues(reverseString());
+      assertThat(filteredMap, mapHasSize(1));
+      assertThat(filteredMap, hasKey("key1"));
+      assertThat(filteredMap, not(hasKey("key2")));
+   }
 
-        assertThat(convertedMap, mapHasSize(2));
-        assertThat(convertedMap, hasValue("2eulav"));
-        assertThat(convertedMap, hasValue("1eulav"));
-    }
+   @Test
+   public void canConvertMapValues()
+   {
+      final FluentMap<String, String> convertedMap = $.map(String.class, String.class).$put("key1", "value1").$put("key2", "value2")
+               .$convertValues(reverseString());
+
+      assertThat(convertedMap, mapHasSize(2));
+      assertThat(convertedMap, hasValue("2eulav"));
+      assertThat(convertedMap, hasValue("1eulav"));
+   }
+
+   @Test
+   public void cannotAddValuesToAOneWayConvertedMap()
+   {
+      final FluentMap<String, String> convertedMap = $.map(String.class, String.class).$convertValues(reverseString());
+
+      exception.expect(UnsupportedOperationException.class);
+      convertedMap.put("newKey", "newValue");
+   }
+
+   @Test
+   public void canAddValuesToABothWaysConvertedMap()
+   {
+      final FluentMap<String, String> underlyingMap = $.map(String.class, String.class);
+      final FluentMap<String, String> convertedMap = underlyingMap.$convertValues(reverseString(), reverseString());
+
+      convertedMap.put("newKey", "1eulav");
+
+      assertThat(underlyingMap, hasValue("value1"));
+      assertThat(convertedMap, hasValue("1eulav"));
+
+      convertedMap.entrySet().add(new Map.Entry<String, String>()
+      {
+
+         public String setValue(final String value)
+         {
+            return null;
+         }
+
+         public String getValue()
+         {
+            return null;
+         }
+
+         public String getKey()
+         {
+            return null;
+         }
+      })
+   }
 }

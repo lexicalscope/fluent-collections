@@ -21,15 +21,15 @@ import ch.lambdaj.function.convert.Converter;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class ConvertingSet<V, W> implements Set<V> {
-    private final Set<W> set;
-    private final Converter<W, V> forward;
-    private final Converter<V, W> reverse;
+public class ConvertingSet<V, VO> implements Set<V> {
+    private final Set<VO> set;
+    private final Converter<VO, V> forward;
+    private final Converter<V, VO> reverse;
 
     public ConvertingSet(
-            final Set<W> set,
-            final Converter<W, V> forward,
-            final Converter<V, W> reverse) {
+            final Set<VO> set,
+            final Converter<VO, V> forward,
+            final Converter<V, VO> reverse) {
         this.set = set;
         this.forward = forward;
         this.reverse = reverse;
@@ -44,18 +44,18 @@ public class ConvertingSet<V, W> implements Set<V> {
     }
 
     public boolean contains(final Object o) {
-        return set.contains(forward.convert((W) o));
+        return set.contains(forward.convert((VO) o));
     }
 
     public Iterator<V> iterator() {
-        return new ConvertingIterator<V, W>(set.iterator(), forward);
+        return new ConvertingIterator<V, VO>(set.iterator(), forward);
     }
 
     public Object[] toArray() {
         final Object[] raw = set.toArray();
         final Object[] result = new Object[raw.length];
         for (int i = 0; i < result.length; i++) {
-            result[i] = forward.convert((W) raw[i]);
+            result[i] = forward.convert((VO) raw[i]);
         }
         return result;
     }
@@ -68,7 +68,7 @@ public class ConvertingSet<V, W> implements Set<V> {
             .newInstance(a.getClass().getComponentType(), raw.length);
 
         for (int i = 0; i < raw.length; i++) {
-            result[i] = (T) forward.convert((W) raw[i]);
+            result[i] = (T) forward.convert((VO) raw[i]);
         }
         return result;
     }
