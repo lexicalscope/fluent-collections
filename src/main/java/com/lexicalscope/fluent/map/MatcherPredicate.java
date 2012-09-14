@@ -1,8 +1,8 @@
 package com.lexicalscope.fluent.map;
 
-import org.hamcrest.Matcher;
-
 import com.google.common.base.Predicate;
+
+import org.hamcrest.Matcher;
 
 /*
  * Copyright 2012 Tim Wood
@@ -26,7 +26,7 @@ public class MatcherPredicate<T> implements Predicate<T> {
         this.matcher = matcher;
     }
 
-    public boolean apply(final T input) {
+    @Override public boolean apply(final T input) {
         return matcher.matches(input);
     }
 }

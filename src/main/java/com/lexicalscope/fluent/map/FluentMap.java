@@ -1,6 +1,6 @@
 package com.lexicalscope.fluent.map;
 
-import static com.google.common.collect.Maps.filterKeys;
+import static com.google.common.collect.Maps.*;
 import static com.lexicalscope.fluent.Fluent.$;
 import ch.lambdaj.function.convert.Converter;
 
@@ -33,25 +33,21 @@ public class FluentMap<K, V> extends ForwardingMap<K, V>{
         this.map = map;
     }
 
-    public FluentMap<K,V> $filter(final Matcher<K> matcher) {
+    public FluentMap<K,V> $filterKeys(final Matcher<K> matcher) {
         return $(filterKeys(delegate(), new MatcherPredicate<K>(matcher)));
     }
 
+    public FluentMap<K,V> $filterValues(final Matcher<V> matcher) {
+       return $(filterValues(delegate(), new MatcherPredicate<V>(matcher)));
+   }
+
     public <W> FluentMap<K, W> $convert(final Converter<Entry<K, V>, W> converter) {
         return $(Maps.transformEntries(delegate(), new Maps.EntryTransformer<K, V, W>(){
-            public W transformEntry(final K key, final V value){
+            @Override public W transformEntry(final K key, final V value){
                 return converter.convert(new Map.Entry<K, V>() {
-                    public K getKey() {
-                        return key;
-                    }
-
-                    public V getValue() {
-                        return value;
-                    }
-
-                    public V setValue(final V value) {
-                        throw new UnsupportedOperationException();
-                    }
+                   @Override public K getKey() { return key; }
+                   @Override public V getValue() { return value;}
+                   @Override public V setValue(final V value) { throw new UnsupportedOperationException(); }
                 });
             }
         }));
@@ -59,7 +55,7 @@ public class FluentMap<K, V> extends ForwardingMap<K, V>{
 
     public <W> FluentMap<K, W> $convertValues(final Converter<V, W> converter) {
         return $(Maps.transformEntries(delegate(), new Maps.EntryTransformer<K, V, W>(){
-            public W transformEntry(final K key, final V value){
+            @Override public W transformEntry(final K key, final V value){
                 return converter.convert(value);
             }
         }));
@@ -69,7 +65,7 @@ public class FluentMap<K, V> extends ForwardingMap<K, V>{
        return $(new ValueConvertingMap<K,W,V>(delegate(), forwardConverter, reverseConverter));
    }
 
-    public <L> FluentMap<L, V> $convertKey(
+    public <L> FluentMap<L, V> $convertKeys(
             final Converter<K, L> forward,
             final Converter<L, K> reverse) {
         return $(new KeyConvertingMap<L,K,V>(delegate(), forward, reverse));

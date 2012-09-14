@@ -33,7 +33,25 @@ public class TestFluentMap
    @Test
    public void canFilterMapKeys()
    {
-      final FluentMap<String, String> filteredMap = $.map(String.class, String.class).$put("key1", "value1").$put("key2", "value2").$filter(equalTo("key1"));
+      final FluentMap<String, String> filteredMap =
+               $.map(String.class, String.class).
+                  $put("key1", "value1").
+                  $put("key2", "value2").
+                  $filterKeys(equalTo("key1"));
+
+      assertThat(filteredMap, mapHasSize(1));
+      assertThat(filteredMap, hasKey("key1"));
+      assertThat(filteredMap, not(hasKey("key2")));
+   }
+
+   @Test
+   public void canFilterMapValues()
+   {
+      final FluentMap<String, String> filteredMap =
+               $.map(String.class, String.class).
+                  $put("key1", "value1").
+                  $put("key2", "value2").
+                  $filterValues(equalTo("value1"));
 
       assertThat(filteredMap, mapHasSize(1));
       assertThat(filteredMap, hasKey("key1"));
@@ -43,8 +61,11 @@ public class TestFluentMap
    @Test
    public void canConvertMapValues()
    {
-      final FluentMap<String, String> convertedMap = $.map(String.class, String.class).$put("key1", "value1").$put("key2", "value2")
-               .$convertValues(reverseString());
+      final FluentMap<String, String> convertedMap =
+               $.map(String.class, String.class).
+                  $put("key1", "value1").
+                  $put("key2", "value2").
+                  $convertValues(reverseString());
 
       assertThat(convertedMap, mapHasSize(2));
       assertThat(convertedMap, hasValue("2eulav"));
@@ -77,7 +98,7 @@ public class TestFluentMap
    public void canAddValuesToABothWaysKeyConvertedMap()
    {
       final FluentMap<String, String> underlyingMap = $.map(String.class, String.class);
-      final FluentMap<String, String> convertedMap = underlyingMap.$convertKey(reverseString(), reverseString());
+      final FluentMap<String, String> convertedMap = underlyingMap.$convertKeys(reverseString(), reverseString());
 
       convertedMap.put("yek", "value1");
 
@@ -88,5 +109,17 @@ public class TestFluentMap
       assertThat(convertedMap, hasValue("value1"));
       assertThat(convertedMap, hasKey("yek"));
       assertThat(convertedMap, hasEntry("yek", "value1"));
+   }
+
+   @Test
+   public void getAnyReturnsAnyMatchingElement()
+   {
+      final FluentMap<String, String> map = $.map(String.class, String.class);
+
+      map.$put("key0", "value0").$put("key1", "value1").$put("key2", "value2");
+
+      assertThat(map.$getAny("key0"), equalTo("value0"));
+      assertThat(map.$getAny("key0", "key1"), equalTo("value0"));
+      assertThat(map.$getAny("key2", "key1"), equalTo("value2"));
    }
 }

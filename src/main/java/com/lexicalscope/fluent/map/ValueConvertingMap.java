@@ -49,42 +49,42 @@ public class ValueConvertingMap<K, V, VO> extends AbstractConverting<V, VO> impl
       this.map = map;
    }
 
-   public int size()
+   @Override public int size()
    {
       return map.size();
    }
 
-   public boolean isEmpty()
+   @Override public boolean isEmpty()
    {
       return map.isEmpty();
    }
 
-   public boolean containsKey(final Object key)
+   @Override public boolean containsKey(final Object key)
    {
       return map.containsKey(key);
    }
 
-   public boolean containsValue(final Object value)
+   @Override public boolean containsValue(final Object value)
    {
       return map.containsValue(reverseConvert((V) value));
    }
 
-   public V get(final Object key)
+   @Override public V get(final Object key)
    {
       return forwardConvert(map.get(key));
    }
 
-   public V put(final K key, final V value)
+   @Override public V put(final K key, final V value)
    {
       return forwardConvert(map.put(key, reverseConvert(value)));
    }
 
-   public V remove(final Object key)
+   @Override public V remove(final Object key)
    {
       return forwardConvert(map.remove(key));
    }
 
-   public void putAll(final Map<? extends K, ? extends V> m)
+   @Override public void putAll(final Map<? extends K, ? extends V> m)
    {
       for (final java.util.Map.Entry<? extends K, ? extends V> entry : m.entrySet())
       {
@@ -92,22 +92,22 @@ public class ValueConvertingMap<K, V, VO> extends AbstractConverting<V, VO> impl
       }
    }
 
-   public void clear()
+   @Override public void clear()
    {
       map.clear();
    }
 
-   public Set<K> keySet()
+   @Override public Set<K> keySet()
    {
       return map.keySet();
    }
 
-   public Collection<V> values()
+   @Override public Collection<V> values()
    {
       return new ConvertingCollection<V, VO>(map.values(), forwardConverter(), reverseConverter());
    }
 
-   public Set<java.util.Map.Entry<K, V>> entrySet()
+   @Override public Set<java.util.Map.Entry<K, V>> entrySet()
    {
       return new ConvertingSet<java.util.Map.Entry<K, V>, java.util.Map.Entry<K, VO>>(map.entrySet(), new EntryValueConvertor<K, V, VO>(forwardConverter(), reverseConverter()), new EntryValueConvertor<K, VO, V>(reverseConverter(), forwardConverter()));
    }
