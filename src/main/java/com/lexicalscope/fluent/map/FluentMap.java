@@ -2,6 +2,7 @@ package com.lexicalscope.fluent.map;
 
 import static com.google.common.collect.Maps.*;
 import static com.lexicalscope.fluent.Fluent.$;
+import ch.lambdaj.Lambda;
 import ch.lambdaj.function.convert.Converter;
 
 import com.google.common.collect.ForwardingMap;
@@ -105,4 +106,14 @@ public class FluentMap<K, V> extends ForwardingMap<K, V>{
     @Override protected Map<K, V> delegate() {
         return map;
     }
+
+   public V $foreachValue()
+   {
+      return Lambda.forEach(values());
+   }
+
+   public K $foreachKey()
+   {
+      return Lambda.forEach(keySet());
+   }
 }

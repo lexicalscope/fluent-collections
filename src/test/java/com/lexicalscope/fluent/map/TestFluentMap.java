@@ -6,6 +6,7 @@ import static com.lexicalscope.fluent.StringConverters.reverseString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+import org.hamcrest.StringDescription;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -27,8 +28,7 @@ import org.junit.rules.ExpectedException;
  */
 public class TestFluentMap
 {
-   @Rule
-   public final ExpectedException exception = ExpectedException.none();
+   @Rule public final ExpectedException exception = ExpectedException.none();
 
    @Test
    public void canFilterMapKeys()
@@ -121,5 +121,37 @@ public class TestFluentMap
       assertThat(map.$getAny("key0"), equalTo("value0"));
       assertThat(map.$getAny("key0", "key1"), equalTo("value0"));
       assertThat(map.$getAny("key2", "key1"), equalTo("value2"));
+   }
+
+   @Test
+   public void foreachValue()
+   {
+      final FluentMap<String, MutableString> map = $.map(String.class, MutableString.class);
+
+      final FluentMap<String, String> stringMap = map.
+               $convertValues(new ConvertMutableStringToString(), new ConvertStringToMutableString()).
+               $put("key0", "value0").
+               $put("key1", "value1").
+               $put("key2", "value2");
+
+      map.$foreachValue().reverse();
+
+      assertThat(stringMap.get("key0"), equalTo("0eulav"));
+      assertThat(stringMap.get("key1"), equalTo("1eulav"));
+      assertThat(stringMap.get("key2"), equalTo("2eulav"));
+   }
+
+   @Test
+   public void foreachKey()
+   {
+      final FluentMap<MutableString, String> map = $.map(MutableString.class, String.class);
+      map.$convertKeys(new ConvertMutableStringToString(), new ConvertStringToMutableString()).
+          $put("key0", "value0").
+          $put("key1", "value1").
+          $put("key2", "value2");
+
+      final StringDescription description = new StringDescription();
+      map.$foreachKey().describe(description);
+      assertThat(description.toString(), equalTo("\"key0\"\"key1\"\"key2\""));
    }
 }
