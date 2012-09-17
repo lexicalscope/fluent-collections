@@ -1,5 +1,6 @@
 package com.lexicalscope.fluent.map;
 
+import static ch.lambdaj.Lambda.on;
 import static com.lexicalscope.fluent.Fluent.$;
 import static com.lexicalscope.fluent.MapMatchers.mapHasSize;
 import static com.lexicalscope.fluent.StringConverters.reverseString;
@@ -153,5 +154,16 @@ public class TestFluentMap
       final StringDescription description = new StringDescription();
       map.$foreachKey().describe(description);
       assertThat(description.toString(), equalTo("\"key0\"\"key1\"\"key2\""));
+   }
+
+   @Test
+   public void collectValues()
+   {
+      final FluentMap<String, Person> map = $.map(String.class, Person.class).
+               $put("key0", new Person("tim", 41)).
+               $put("key1", new Person("john", 29)).
+               $put("key2", new Person("joe", 76));
+
+      assertThat(map.$collectValues(on(Person.class).getAge()), contains(41, 29, 76));
    }
 }

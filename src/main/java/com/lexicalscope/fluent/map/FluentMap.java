@@ -8,6 +8,7 @@ import ch.lambdaj.function.convert.Converter;
 import com.google.common.collect.ForwardingMap;
 import com.google.common.collect.Maps;
 
+import java.util.List;
 import java.util.Map;
 
 import org.hamcrest.Matcher;
@@ -115,5 +116,10 @@ public class FluentMap<K, V> extends ForwardingMap<K, V>{
    public K $foreachKey()
    {
       return Lambda.forEach(keySet());
+   }
+
+   public <T> List<T> $collectValues(final T argument)
+   {
+      return Lambda.collect(this, argument);
    }
 }
