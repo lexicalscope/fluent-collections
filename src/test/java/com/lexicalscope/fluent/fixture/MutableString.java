@@ -2,7 +2,7 @@
 //Author       : t.wood
 //Copyright    : (c) Resilient Networks plc 2012 - All Rights Reserved
 //
-package com.lexicalscope.fluent.map;
+package com.lexicalscope.fluent.fixture;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.StringDescription;

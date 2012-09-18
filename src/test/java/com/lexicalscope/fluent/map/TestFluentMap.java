@@ -7,6 +7,11 @@ import static com.lexicalscope.fluent.StringConverters.reverseString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+import com.lexicalscope.fluent.fixture.ConvertMutableStringToString;
+import com.lexicalscope.fluent.fixture.ConvertStringToMutableString;
+import com.lexicalscope.fluent.fixture.MutableString;
+import com.lexicalscope.fluent.fixture.Person;
+
 import org.hamcrest.StringDescription;
 import org.junit.Rule;
 import org.junit.Test;
