@@ -1,4 +1,4 @@
-package com.lexicalscope.fluent.map;
+package com.lexicalscope.fluent.adapters;
 
 import com.google.common.base.Predicate;
 

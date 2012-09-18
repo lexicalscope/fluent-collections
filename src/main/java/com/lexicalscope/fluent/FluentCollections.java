@@ -1,5 +1,6 @@
 package com.lexicalscope.fluent;
 
+import com.lexicalscope.fluent.list.FluentList;
 import com.lexicalscope.fluent.map.DefaultMapEntry;
 import com.lexicalscope.fluent.map.FluentMap;
 
@@ -24,19 +25,29 @@ import java.util.Map.Entry;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class Fluent {
-    public static final Fluent $ = new Fluent();
+
+/**
+ * Method staring with a $ are going return a wrapper around the collection but methods starting with _ are going to copy the collection.
+ *
+ * @author t.wood
+ */
+public class FluentCollections {
+    public static final FluentCollections $ = new FluentCollections();
 
     public static <K, V> FluentMap<K, V> $(final Map<K, V> map){
         return new FluentMap<K, V>(map);
     }
 
+    public static <V> FluentList<V> $(final List<V> list){
+       return new FluentList<V>(list);
+   }
+
     public <K, V> FluentMap<K, V> map(final Class<K> key, final Class<V> value) {
         return $(new LinkedHashMap<K, V>());
     }
 
-    public <V> List<V> list(final Class<V> value) {
-        return new ArrayList<V>();
+    public <V> FluentList<V> list(final Class<V> value) {
+        return $(new ArrayList<V>());
     }
 
    public <K, V> Entry<K, V> mapEntry(final K key, final V value)

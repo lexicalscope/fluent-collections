@@ -1,7 +1,7 @@
 package com.lexicalscope.fluent.map;
 
 import static ch.lambdaj.Lambda.on;
-import static com.lexicalscope.fluent.Fluent.$;
+import static com.lexicalscope.fluent.FluentCollections.$;
 import static com.lexicalscope.fluent.MapMatchers.mapHasSize;
 import static com.lexicalscope.fluent.StringConverters.reverseString;
 import static org.hamcrest.MatcherAssert.assertThat;

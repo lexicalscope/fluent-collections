@@ -1,8 +1,8 @@
 package com.lexicalscope.fluent;
 
-import org.apache.commons.lang3.StringUtils;
-
 import ch.lambdaj.function.convert.StringConverter;
+
+import org.apache.commons.lang3.StringUtils;
 
 /*
  * Copyright 2012 Tim Wood
@@ -22,7 +22,7 @@ import ch.lambdaj.function.convert.StringConverter;
 public class StringConverters {
     public static StringConverter<String> reverseString() {
         return new StringConverter<String>() {
-            public String convert(final String from) {
+            @Override public String convert(final String from) {
                 return StringUtils.reverse(from);
             }};
     }

@@ -1,12 +1,13 @@
 package com.lexicalscope.fluent.map;
 
 import static com.google.common.collect.Maps.*;
-import static com.lexicalscope.fluent.Fluent.$;
+import static com.lexicalscope.fluent.FluentCollections.$;
 import ch.lambdaj.Lambda;
 import ch.lambdaj.function.convert.Converter;
 
 import com.google.common.collect.ForwardingMap;
 import com.google.common.collect.Maps;
+import com.lexicalscope.fluent.adapters.MatcherPredicate;
 
 import java.util.List;
 import java.util.Map;
