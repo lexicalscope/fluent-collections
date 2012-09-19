@@ -1,7 +1,7 @@
 package com.lexicalscope.fluent.map;
 
 import static com.google.common.collect.Maps.*;
-import static com.lexicalscope.fluent.FluentCollections.$;
+import static com.lexicalscope.fluent.FluentDollar.$;
 import ch.lambdaj.Lambda;
 import ch.lambdaj.function.convert.Converter;
 
@@ -72,6 +72,18 @@ public class FluentMap<K, V> extends ForwardingMap<K, V>{
             final Converter<K, L> forward,
             final Converter<L, K> reverse) {
         return $(new KeyConvertingMap<L,K,V>(delegate(), forward, reverse));
+    }
+
+    public <L> FluentMap<K, V> $vetoKeys(final Matcher<K> matcher) {
+         return $(new KeyVetoingMap<K,V>(delegate(), matcher));
+    }
+
+    public <L> FluentMap<K, V> $vetoPuts(final PutVeto<? super K, ? super V> veto) {
+       return $(new PutVetoingMap<K,V>(delegate(), veto));
+    }
+
+    public <L> FluentMap<K, V> $processPuts(final Matcher<K> matcher, final Converter<Entry<K, V>, Entry<K, V>> converter) {
+       return $(new PutConvertingMap<K,V>(delegate(), matcher, converter));
     }
 
     public V $getAny(final Object ... keys ) {

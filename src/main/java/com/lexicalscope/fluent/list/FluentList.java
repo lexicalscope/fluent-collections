@@ -4,7 +4,8 @@
 //
 package com.lexicalscope.fluent.list;
 
-import static com.lexicalscope.fluent.FluentCollections.$;
+import static com.lexicalscope.fluent.FluentDollar.$;
+import ch.lambdaj.Lambda;
 import ch.lambdaj.collection.LambdaCollections;
 import ch.lambdaj.collection.LambdaGroup;
 import ch.lambdaj.collection.LambdaList;
@@ -20,6 +21,8 @@ import com.lexicalscope.fluent.adapters.ConverterFunction;
 import com.lexicalscope.fluent.collection.FluentCollection;
 import com.lexicalscope.fluent.map.FluentMap;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.hamcrest.Matcher;
@@ -171,9 +174,14 @@ public class FluentList<T> extends ForwardingList<T>
       return lambdaList.join(separator);
    }
 
-   public T _forEach()
+//   public T _forEach()
+//   {
+//      return lambdaList.forEach();
+//   }
+
+   public T _forEach(final Class<T> clazz)
    {
-      return lambdaList.forEach();
+      return Lambda.forEach(list, clazz);
    }
 
    public T _forEach(final Matcher<?> matcher)
@@ -234,5 +242,12 @@ public class FluentList<T> extends ForwardingList<T>
    public T _unique(final Matcher<?> matcher)
    {
       return lambdaList.unique(matcher);
+   }
+
+   public FluentList<T> _removeAll(final Collection<T> toRemove)
+   {
+      final ArrayList<T> result = Lists.newArrayList(list);
+      result.removeAll(toRemove);
+      return $(result);
    }
 }

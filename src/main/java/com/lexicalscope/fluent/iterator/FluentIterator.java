@@ -4,7 +4,7 @@
 //
 package com.lexicalscope.fluent.iterator;
 
-import static com.lexicalscope.fluent.FluentCollections.$;
+import static com.lexicalscope.fluent.FluentDollar.$;
 import ch.lambdaj.function.convert.Converter;
 
 import com.google.common.collect.ForwardingIterator;

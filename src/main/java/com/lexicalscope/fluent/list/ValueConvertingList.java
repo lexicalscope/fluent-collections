@@ -6,7 +6,7 @@ package com.lexicalscope.fluent.list;
 
 import ch.lambdaj.function.convert.Converter;
 
-import com.lexicalscope.fluent.FluentCollections;
+import com.lexicalscope.fluent.FluentDollar;
 import com.lexicalscope.fluent.map.AbstractConverting;
 
 import java.util.Collection;
@@ -45,7 +45,7 @@ public class ValueConvertingList<T, TO> extends AbstractConverting<T, TO> implem
    @Override
    public Iterator<T> iterator()
    {
-      return FluentCollections.$(delegate.iterator()).$transform(forwardConverter());
+      return FluentDollar.$(delegate.iterator()).$transform(forwardConverter());
    }
 
    @Override
@@ -207,6 +207,6 @@ public class ValueConvertingList<T, TO> extends AbstractConverting<T, TO> implem
    @Override
    public List<T> subList(final int fromIndex, final int toIndex)
    {
-      return FluentCollections.$(delegate.subList(fromIndex, toIndex)).$convert(forwardConverter(), reverseConverter());
+      return FluentDollar.$(delegate.subList(fromIndex, toIndex)).$convert(forwardConverter(), reverseConverter());
    }
 }

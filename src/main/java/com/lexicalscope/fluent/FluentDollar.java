@@ -1,5 +1,6 @@
 package com.lexicalscope.fluent;
 
+import com.google.common.collect.Lists;
 import com.lexicalscope.fluent.collection.FluentCollection;
 import com.lexicalscope.fluent.iterator.FluentIterator;
 import com.lexicalscope.fluent.list.FluentList;
@@ -7,6 +8,7 @@ import com.lexicalscope.fluent.map.DefaultMapEntry;
 import com.lexicalscope.fluent.map.FluentMap;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -35,8 +37,8 @@ import java.util.Map.Entry;
  *
  * @author t.wood
  */
-public class FluentCollections {
-    public static final FluentCollections $ = new FluentCollections();
+public class FluentDollar {
+    public static final FluentDollar $ = new FluentDollar();
 
     public static <K, V> FluentMap<K, V> $(final Map<K, V> map){
         return new FluentMap<K, V>(map);
@@ -44,6 +46,10 @@ public class FluentCollections {
 
     public static <V> FluentList<V> $(final List<V> list){
        return new FluentList<V>(list);
+    }
+
+    public static <V> FluentList<V> _(final List<V> list){
+       return $(Lists.newArrayList(list));
     }
 
     public static <V> FluentCollection<V> $(final Collection<V> collection){
@@ -58,8 +64,17 @@ public class FluentCollections {
         return $(new LinkedHashMap<K, V>());
     }
 
+    public <K, V> FluentMap<K, V> map() {
+       return $(new LinkedHashMap<K, V>());
+    }
+
     public <V> FluentList<V> list(final Class<V> value) {
         return $(new ArrayList<V>());
+    }
+
+    public <V> FluentList<V> asList(final V ... values)
+    {
+       return $(Arrays.asList(values));
     }
 
    public <K, V> Entry<K, V> mapEntry(final K key, final V value)

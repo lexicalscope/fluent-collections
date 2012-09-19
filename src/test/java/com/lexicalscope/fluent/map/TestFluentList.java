@@ -4,7 +4,7 @@
 //
 package com.lexicalscope.fluent.map;
 
-import static com.lexicalscope.fluent.FluentCollections.$;
+import static com.lexicalscope.fluent.FluentDollar.$;
 import static com.lexicalscope.fluent.StringConverters.reverseString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
