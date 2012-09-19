@@ -1,4 +1,4 @@
-package com.lexicalscope.fluent.map;
+package com.lexicalscope.fluent.iterator;
 
 import java.util.Iterator;
 
@@ -19,13 +19,13 @@ import ch.lambdaj.function.convert.Converter;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class ConvertingIterator<V, W> implements Iterator<V> {
-    private final Iterator<W> iterator;
-    private final Converter<W, V> convertor;
+public class ConvertingIterator<T, TO> implements Iterator<T> {
+    private final Iterator<TO> iterator;
+    private final Converter<TO, T> convertor;
 
     public ConvertingIterator(
-            final Iterator<W> iterator,
-            final Converter<W, V> convertor) {
+            final Iterator<TO> iterator,
+            final Converter<TO, T> convertor) {
                 this.iterator = iterator;
                 this.convertor = convertor;
     }
@@ -34,7 +34,7 @@ public class ConvertingIterator<V, W> implements Iterator<V> {
         return iterator.hasNext();
     }
 
-    public V next() {
+    public T next() {
         return convertor.convert(iterator.next());
     }
 

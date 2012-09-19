@@ -1,4 +1,4 @@
-package com.lexicalscope.fluent;
+package com.lexicalscope.fluent.map;
 
 import java.util.Map;
 

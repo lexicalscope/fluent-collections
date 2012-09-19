@@ -4,6 +4,8 @@
 //
 package com.lexicalscope.fluent.map;
 
+import com.lexicalscope.fluent.collection.ConvertingCollection;
+
 import ch.lambdaj.function.convert.Converter;
 
 import java.util.Collection;

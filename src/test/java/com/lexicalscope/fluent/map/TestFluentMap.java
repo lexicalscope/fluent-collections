@@ -2,8 +2,8 @@ package com.lexicalscope.fluent.map;
 
 import static ch.lambdaj.Lambda.on;
 import static com.lexicalscope.fluent.FluentCollections.$;
-import static com.lexicalscope.fluent.MapMatchers.mapHasSize;
 import static com.lexicalscope.fluent.StringConverters.reverseString;
+import static com.lexicalscope.fluent.map.MapMatchers.mapHasSize;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -43,7 +43,7 @@ public class TestFluentMap
                $.map(String.class, String.class).
                   $put("key1", "value1").
                   $put("key2", "value2").
-                  $filterKeys(equalTo("key1"));
+                  $retainKeys(equalTo("key1"));
 
       assertThat(filteredMap, mapHasSize(1));
       assertThat(filteredMap, hasKey("key1"));
@@ -57,7 +57,7 @@ public class TestFluentMap
                $.map(String.class, String.class).
                   $put("key1", "value1").
                   $put("key2", "value2").
-                  $filterValues(equalTo("value1"));
+                  $retainValues(equalTo("value1"));
 
       assertThat(filteredMap, mapHasSize(1));
       assertThat(filteredMap, hasKey("key1"));

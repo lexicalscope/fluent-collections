@@ -1,5 +1,7 @@
 package com.lexicalscope.fluent.map;
 
+import com.lexicalscope.fluent.iterator.ConvertingIterator;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;

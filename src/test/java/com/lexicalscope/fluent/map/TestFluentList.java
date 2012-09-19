@@ -16,28 +16,62 @@ import org.junit.Test;
 public class TestFluentList
 {
    @Test
-   public void canFilterList()
+   public void canFilterAndCopyList()
    {
       final FluentList<String> filteredList =
                $.list(String.class).
                   $add("value1").
                   $add("value2").
-                  _filter(equalTo("value1"));
+                  _retain(equalTo("value1"));
 
       assertThat(filteredList, hasSize(1));
       assertThat(filteredList, contains("value1"));
    }
 
    @Test
-   public void canTransformList()
+   public void canConvertList()
    {
       final FluentList<String> filteredList =
                $.list(String.class).
                   $add("value1").
                   $add("value2").
-                  $transform(reverseString());
+                  $convert(reverseString());
 
       assertThat(filteredList, hasSize(2));
       assertThat(filteredList, contains("1eulav", "2eulav"));
+   }
+
+   @Test
+   public void canConvertAndCopyList()
+   {
+      final FluentList<String> list = $.
+               list(String.class).
+                  $add("value1").
+                  $add("value2");
+
+      final FluentList<String> transformedList = list._convert(reverseString());
+
+      transformedList.add("3eulav");
+
+      assertThat(transformedList, hasSize(3));
+      assertThat(transformedList, contains("1eulav", "2eulav", "3eulav"));
+      assertThat(list, contains("value1", "value2"));
+   }
+
+   @Test
+   public void canDuplexConvertList()
+   {
+      final FluentList<String> list = $.
+               list(String.class).
+                  $add("value1").
+                  $add("value2");
+
+      final FluentList<String> transformedList = list.$convert(reverseString(), reverseString());
+
+      transformedList.add("3eulav");
+
+      assertThat(transformedList, hasSize(3));
+      assertThat(transformedList, contains("1eulav", "2eulav", "3eulav"));
+      assertThat(list, contains("value1", "value2", "value3"));
    }
 }

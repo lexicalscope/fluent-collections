@@ -36,11 +36,11 @@ public class FluentMap<K, V> extends ForwardingMap<K, V>{
         this.map = map;
     }
 
-    public FluentMap<K,V> $filterKeys(final Matcher<K> matcher) {
+    public FluentMap<K,V> $retainKeys(final Matcher<K> matcher) {
         return $(filterKeys(delegate(), new MatcherPredicate<K>(matcher)));
     }
 
-    public FluentMap<K,V> $filterValues(final Matcher<V> matcher) {
+    public FluentMap<K,V> $retainValues(final Matcher<V> matcher) {
        return $(filterValues(delegate(), new MatcherPredicate<V>(matcher)));
    }
 
@@ -66,7 +66,7 @@ public class FluentMap<K, V> extends ForwardingMap<K, V>{
 
     public <W> FluentMap<K, W> $convertValues(final Converter<V, W> forwardConverter, final Converter<W, V> reverseConverter) {
        return $(new ValueConvertingMap<K,W,V>(delegate(), forwardConverter, reverseConverter));
-   }
+    }
 
     public <L> FluentMap<L, V> $convertKeys(
             final Converter<K, L> forward,

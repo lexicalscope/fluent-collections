@@ -1,10 +1,14 @@
 package com.lexicalscope.fluent;
 
+import com.lexicalscope.fluent.collection.FluentCollection;
+import com.lexicalscope.fluent.iterator.FluentIterator;
 import com.lexicalscope.fluent.list.FluentList;
 import com.lexicalscope.fluent.map.DefaultMapEntry;
 import com.lexicalscope.fluent.map.FluentMap;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +44,15 @@ public class FluentCollections {
 
     public static <V> FluentList<V> $(final List<V> list){
        return new FluentList<V>(list);
-   }
+    }
+
+    public static <V> FluentCollection<V> $(final Collection<V> collection){
+       return new FluentCollection<V>(collection);
+    }
+
+    public static <V> FluentIterator<V> $(final Iterator<V> iterator){
+       return new FluentIterator<V>(iterator);
+    }
 
     public <K, V> FluentMap<K, V> map(final Class<K> key, final Class<V> value) {
         return $(new LinkedHashMap<K, V>());
