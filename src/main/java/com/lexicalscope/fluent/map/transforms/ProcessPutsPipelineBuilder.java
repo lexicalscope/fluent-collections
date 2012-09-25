@@ -10,27 +10,22 @@ import ch.lambdaj.function.convert.Converter;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.hamcrest.Matcher;
-
 class ProcessPutsPipelineBuilder<KI, VI, KO, VO> extends MapPipelineBuilder<KI, VI, KO, VO>
 {
    private final MapPipelineBuilder<KI, VI, KO, VO> previous;
-   private final Matcher<Entry<KO, VO>> matcher;
    private final Converter<Entry<KO, VO>, Entry<KO, VO>> converter;
 
    public ProcessPutsPipelineBuilder(
             final MapPipelineBuilder<KI, VI, KO, VO> previous,
-            final Matcher<Entry<KO, VO>> matcher,
             final Converter<Entry<KO, VO>, Entry<KO, VO>> converter)
    {
       this.previous = previous;
-      this.matcher = matcher;
       this.converter = converter;
    }
 
    @Override
    public Map<KI, VI> transform(final Map<KO, VO> map)
    {
-      return previous.transform($(map).$processPuts(matcher, converter));
+      return previous.transform($(map).$processPuts(converter));
    }
 }

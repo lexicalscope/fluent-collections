@@ -8,7 +8,25 @@ import ch.lambdaj.function.convert.Converter;
 
 import org.hamcrest.Matcher;
 
-public interface PredicatedConverter<F, T> extends Matcher<F>, Converter<F, T>
+public class PredicatedConverter<V> implements Converter<V, V>
 {
-   // only converts if the matcher matches
+   private final Matcher<V> predicate;
+   private final Converter<V, V> converter;
+
+   public PredicatedConverter(
+            final Matcher<V> predicate,
+            final Converter<V, V> converter)
+   {
+      this.predicate = predicate;
+      this.converter = converter;
+   }
+
+   @Override
+   public V convert(final V from)
+   {
+      if(predicate.matches(from)) {
+         return converter.convert(from);
+      }
+      return from;
+   }
 }

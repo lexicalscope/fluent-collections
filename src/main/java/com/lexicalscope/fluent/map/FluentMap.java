@@ -82,8 +82,8 @@ public class FluentMap<K, V> extends ForwardingMap<K, V>{
        return $(new PutVetoingMap<K,V>(delegate(), veto));
     }
 
-    public FluentMap<K, V> $processPuts(final Matcher<Entry<K, V>> matcher, final Converter<Entry<K, V>, Entry<K, V>> converter) {
-       return $(new PutConvertingMap<K,V>(delegate(), matcher, converter));
+    public FluentMap<K, V> $processPuts(final Converter<Entry<K, V>, Entry<K, V>> converter) {
+       return $(new PutConvertingMap<K,V>(delegate(), converter));
     }
 
     public V $getAny(final Object ... keys ) {

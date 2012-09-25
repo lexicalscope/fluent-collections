@@ -1,7 +1,10 @@
 package com.lexicalscope.fluent;
 
+import ch.lambdaj.function.convert.Converter;
+
 import com.google.common.collect.Lists;
 import com.lexicalscope.fluent.collection.FluentCollection;
+import com.lexicalscope.fluent.functions.PredicatedConverter;
 import com.lexicalscope.fluent.iterator.FluentIterator;
 import com.lexicalscope.fluent.list.FluentList;
 import com.lexicalscope.fluent.map.DefaultMapEntry;
@@ -16,6 +19,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.hamcrest.Matcher;
 
 /*
  * Copyright 2012 Tim Wood
@@ -91,5 +96,12 @@ public class FluentDollar {
          {
             return map;
          }};
+   }
+
+   public <V> Converter<V, V> predicatedConverter(
+            final Matcher<V> matcher,
+            final Converter<V, V> converter)
+   {
+      return new PredicatedConverter<V>(matcher, converter);
    }
 }

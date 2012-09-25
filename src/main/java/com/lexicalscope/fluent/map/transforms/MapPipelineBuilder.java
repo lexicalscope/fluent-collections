@@ -9,7 +9,6 @@ import ch.lambdaj.function.convert.Converter;
 import com.lexicalscope.fluent.adapters.BiConverterForwardConverter;
 import com.lexicalscope.fluent.adapters.BiConverterReverseConverter;
 import com.lexicalscope.fluent.functions.BiConverter;
-import com.lexicalscope.fluent.functions.PredicatedConverter;
 import com.lexicalscope.fluent.map.PutVeto;
 
 import java.util.Map.Entry;
@@ -24,14 +23,9 @@ public abstract class MapPipelineBuilder<KI, VI, KO, VO> implements MapTransform
       return new AllowKeysPipelineBuilder<KI, VI, KO, VO>(this, matcher);
    }
 
-   public MapPipelineBuilder<KI, VI, KO, VO> processPuts(final Matcher<Entry<KO, VO>> matcher, final Converter<Entry<KO, VO>, Entry<KO, VO>> converter)
+   public MapPipelineBuilder<KI, VI, KO, VO> processPuts(final Converter<Entry<KO, VO>, Entry<KO, VO>> converter)
    {
-      return new ProcessPutsPipelineBuilder<KI, VI, KO, VO>(this, matcher, converter);
-   }
-
-   public MapPipelineBuilder<KI, VI, KO, VO> processPuts(final PredicatedConverter<Entry<KO, VO>, Entry<KO, VO>> predicatedConverter)
-   {
-      return processPuts(predicatedConverter, predicatedConverter);
+      return new ProcessPutsPipelineBuilder<KI, VI, KO, VO>(this, converter);
    }
 
    public <KT> MapPipelineBuilder<KI, VI, KT, VO> convertKeys(final Converter<KT, KO> forward,
