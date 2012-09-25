@@ -74,15 +74,15 @@ public class FluentMap<K, V> extends ForwardingMap<K, V>{
         return $(new KeyConvertingMap<L,K,V>(delegate(), forward, reverse));
     }
 
-    public <L> FluentMap<K, V> $vetoKeys(final Matcher<K> matcher) {
+    public FluentMap<K, V> $allowKeys(final Matcher<K> matcher) {
          return $(new KeyVetoingMap<K,V>(delegate(), matcher));
     }
 
-    public <L> FluentMap<K, V> $vetoPuts(final PutVeto<? super K, ? super V> veto) {
+    public FluentMap<K, V> $vetoPuts(final PutVeto<? super K, ? super V> veto) {
        return $(new PutVetoingMap<K,V>(delegate(), veto));
     }
 
-    public <L> FluentMap<K, V> $processPuts(final Matcher<K> matcher, final Converter<Entry<K, V>, Entry<K, V>> converter) {
+    public FluentMap<K, V> $processPuts(final Matcher<K> matcher, final Converter<Entry<K, V>, Entry<K, V>> converter) {
        return $(new PutConvertingMap<K,V>(delegate(), matcher, converter));
     }
 

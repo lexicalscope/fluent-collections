@@ -6,6 +6,7 @@ import com.lexicalscope.fluent.iterator.FluentIterator;
 import com.lexicalscope.fluent.list.FluentList;
 import com.lexicalscope.fluent.map.DefaultMapEntry;
 import com.lexicalscope.fluent.map.FluentMap;
+import com.lexicalscope.fluent.map.transforms.MapPipelineBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,5 +81,15 @@ public class FluentDollar {
    public <K, V> Entry<K, V> mapEntry(final K key, final V value)
    {
       return new DefaultMapEntry<K, V>(key, value);
+   }
+
+   public <K, V> MapPipelineBuilder<K, V, K, V> mapPipeline()
+   {
+      return new MapPipelineBuilder<K, V, K, V>(){
+         @Override
+         public Map<K, V> transform(final Map<K, V> map)
+         {
+            return map;
+         }};
    }
 }
