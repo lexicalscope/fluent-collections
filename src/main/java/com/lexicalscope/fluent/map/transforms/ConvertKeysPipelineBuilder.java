@@ -26,9 +26,9 @@ class ConvertKeysPipelineBuilder<KI, VI, KP, KO, VO> extends MapPipelineBuilder<
    }
 
    @Override
-   public Map<KI, VI> transform(final Map<KO, VO> map)
+   public Map<KI, VI> outputTo(final Map<KO, VO> map)
    {
-      return previous.transform($(map).$convertKeys(forward, reverse));
+      return previous.outputTo($(map).$convertKeys(forward, reverse));
    }
 
 }

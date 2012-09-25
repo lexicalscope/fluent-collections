@@ -16,7 +16,7 @@ import java.util.Map.Entry;
 import org.hamcrest.Matcher;
 
 
-public abstract class MapPipelineBuilder<KI, VI, KO, VO> implements MapTransform<KI, VI, KO, VO>
+public abstract class MapPipelineBuilder<KI, VI, KO, VO> implements MapPipelineBuilderStage<KI, VI, KO, VO>
 {
    public MapPipelineBuilder<KI, VI, KO, VO> allowKeys(final Matcher<KO> matcher)
    {

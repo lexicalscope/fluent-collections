@@ -92,7 +92,7 @@ public class FluentDollar {
    {
       return new MapPipelineBuilder<K, V, K, V>(){
          @Override
-         public Map<K, V> transform(final Map<K, V> map)
+         public Map<K, V> outputTo(final Map<K, V> map)
          {
             return map;
          }};

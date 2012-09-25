@@ -24,8 +24,8 @@ class VetoPutPipelineBuilder<KI, VI, KO, VO> extends MapPipelineBuilder<KI, VI, 
    }
 
    @Override
-   public Map<KI, VI> transform(final Map<KO, VO> map)
+   public Map<KI, VI> outputTo(final Map<KO, VO> map)
    {
-      return previous.transform($(map).$vetoPuts(veto));
+      return previous.outputTo($(map).$vetoPuts(veto));
    }
 }

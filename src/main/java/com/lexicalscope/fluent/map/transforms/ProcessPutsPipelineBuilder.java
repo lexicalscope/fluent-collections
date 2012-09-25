@@ -24,8 +24,8 @@ class ProcessPutsPipelineBuilder<KI, VI, KO, VO> extends MapPipelineBuilder<KI, 
    }
 
    @Override
-   public Map<KI, VI> transform(final Map<KO, VO> map)
+   public Map<KI, VI> outputTo(final Map<KO, VO> map)
    {
-      return previous.transform($(map).$processPuts(converter));
+      return previous.outputTo($(map).$processPuts(converter));
    }
 }

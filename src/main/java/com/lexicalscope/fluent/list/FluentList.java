@@ -24,6 +24,7 @@ import com.lexicalscope.fluent.map.FluentMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.hamcrest.Matcher;
 
@@ -244,10 +245,15 @@ public class FluentList<T> extends ForwardingList<T>
       return lambdaList.unique(matcher);
    }
 
-   public FluentList<T> _removeAll(final Collection<T> toRemove)
+   public FluentList<T> _without(final Collection<T> toRemove)
    {
       final ArrayList<T> result = Lists.newArrayList(list);
       result.removeAll(toRemove);
       return $(result);
+   }
+
+   public FluentList<T> _withoutKeys(final Map<T, ?> map)
+   {
+      return _without(map.keySet());
    }
 }
