@@ -15,12 +15,12 @@ import org.hamcrest.Matcher;
 class ProcessPutsPipelineBuilder<KI, VI, KO, VO> extends MapPipelineBuilder<KI, VI, KO, VO>
 {
    private final MapPipelineBuilder<KI, VI, KO, VO> previous;
-   private final Matcher<KO> matcher;
+   private final Matcher<Entry<KO, VO>> matcher;
    private final Converter<Entry<KO, VO>, Entry<KO, VO>> converter;
 
    public ProcessPutsPipelineBuilder(
             final MapPipelineBuilder<KI, VI, KO, VO> previous,
-            final Matcher<KO> matcher,
+            final Matcher<Entry<KO, VO>> matcher,
             final Converter<Entry<KO, VO>, Entry<KO, VO>> converter)
    {
       this.previous = previous;

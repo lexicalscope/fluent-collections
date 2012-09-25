@@ -1,6 +1,7 @@
 package com.lexicalscope.fluent;
 
 import java.util.Collection;
+import java.util.Map.Entry;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -48,5 +49,22 @@ public class CollectionMatchers {
                 description.appendText("collection containing ").appendValue(expected);
             }
         };
+    }
+
+    public static <K, V> Matcher<Entry<K, V>> key(final Matcher<K> matcher) {
+      return new TypeSafeMatcher<Entry<K, V>>()
+      {
+         @Override
+         public void describeTo(final Description description)
+         {
+            description.appendText("key matching ").appendDescriptionOf(matcher);
+         }
+
+         @Override
+         protected boolean matchesSafely(final Entry<K, V> item)
+         {
+            return matcher.matches(item.getKey());
+         }
+      };
     }
 }

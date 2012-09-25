@@ -15,10 +15,10 @@ import org.hamcrest.Matcher;
 public class PutConvertingMap<K, V> extends AbstractPutManipulatingMap<K, V>
 {
    private final Map<K, V> delegate;
-   private final Matcher<K> matcher;
+   private final Matcher<Entry<K, V>> matcher;
    private final Converter<java.util.Map.Entry<K, V>, java.util.Map.Entry<K, V>> converter;
 
-   public PutConvertingMap(final Map<K, V> delegate, final Matcher<K> matcher, final Converter<Entry<K, V>, Entry<K, V>> converter)
+   public PutConvertingMap(final Map<K, V> delegate, final Matcher<Entry<K, V>> matcher, final Converter<Entry<K, V>, Entry<K, V>> converter)
    {
       this.delegate = delegate;
       this.matcher = matcher;
@@ -28,9 +28,10 @@ public class PutConvertingMap<K, V> extends AbstractPutManipulatingMap<K, V>
    @Override
    public V put(final K key, final V value)
    {
-      if(matcher.matches(key))
+      final java.util.Map.Entry<K, V> entry = $.mapEntry(key, value);
+      if(matcher.matches(entry))
       {
-         final java.util.Map.Entry<K, V> converted = converter.convert($.mapEntry(key, value));
+         final java.util.Map.Entry<K, V> converted = converter.convert(entry);
          return super.put(converted.getKey(), converted.getValue());
       }
       return super.put(key, value);
