@@ -2,7 +2,7 @@
 //Author       : t.wood
 //Copyright    : (c) Resilient Networks plc 2012 - All Rights Reserved
 //
-package com.lexicalscope.fluent.map;
+package com.lexicalscope.fluent.list;
 
 import static com.lexicalscope.fluent.FluentDollar.$;
 import static com.lexicalscope.fluent.StringConverters.reverseString;

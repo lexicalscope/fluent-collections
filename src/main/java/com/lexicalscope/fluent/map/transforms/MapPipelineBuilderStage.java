@@ -6,7 +6,7 @@ package com.lexicalscope.fluent.map.transforms;
 
 import java.util.Map;
 
-public interface MapTransform<KI, VI, KO, VO>
+public interface MapPipelineBuilderStage<KI, VI, KO, VO>
 {
-   Map<KI, VI> transform(Map<KO, VO> map);
+   Map<KI, VI> outputTo(Map<KO, VO> map);
 }
