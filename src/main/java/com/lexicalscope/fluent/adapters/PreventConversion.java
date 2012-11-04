@@ -20,7 +20,9 @@ public class PreventConversion
       };
    }
 
-   public static <F, T> Converter<F, T> preventConversion(final Class<F> from, final Class<T> to)
+   public static <F, T> Converter<F, T> preventConversion(
+		   @SuppressWarnings("unused") final Class<F> from,
+		   @SuppressWarnings("unused") final Class<T> to)
    {
       return preventConversion();
    }

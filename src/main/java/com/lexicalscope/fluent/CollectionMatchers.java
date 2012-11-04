@@ -23,7 +23,7 @@ import org.hamcrest.TypeSafeMatcher;
  * limitations under the License.
  */
 public class CollectionMatchers {
-    public static <V> Matcher<Collection<V>> empty(final Class<V> klass) {
+    public static <V> Matcher<Collection<V>> empty(@SuppressWarnings("unused") final Class<V> klass) {
         return new TypeSafeMatcher<Collection<V>>(Collection.class) {
             @Override public boolean matchesSafely(final Collection<V> item) {
                 return item.isEmpty();
@@ -31,7 +31,8 @@ public class CollectionMatchers {
             @Override public void describeMismatchSafely(final Collection<V> item, final Description mismatchDescription) {
                 mismatchDescription.appendValue(item);
             }
-            public void describeTo(final Description description) {
+            @Override
+			public void describeTo(final Description description) {
                 description.appendText("an empty collection");
             }
         };
@@ -45,7 +46,8 @@ public class CollectionMatchers {
             @Override public void describeMismatchSafely(final Collection<V> item, final Description mismatchDescription) {
                 mismatchDescription.appendValue(item);
             }
-            public void describeTo(final Description description) {
+            @Override
+			public void describeTo(final Description description) {
                 description.appendText("collection containing ").appendValue(expected);
             }
         };

@@ -1,16 +1,5 @@
 package com.lexicalscope.fluent;
 
-import ch.lambdaj.function.convert.Converter;
-
-import com.google.common.collect.Lists;
-import com.lexicalscope.fluent.collection.FluentCollection;
-import com.lexicalscope.fluent.functions.PredicatedConverter;
-import com.lexicalscope.fluent.iterator.FluentIterator;
-import com.lexicalscope.fluent.list.FluentList;
-import com.lexicalscope.fluent.map.DefaultMapEntry;
-import com.lexicalscope.fluent.map.FluentMap;
-import com.lexicalscope.fluent.map.transforms.MapPipelineBuilder;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,6 +10,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.hamcrest.Matcher;
+
+import ch.lambdaj.function.convert.Converter;
+
+import com.google.common.collect.Lists;
+import com.lexicalscope.fluent.collection.FluentCollection;
+import com.lexicalscope.fluent.functions.PredicatedConverter;
+import com.lexicalscope.fluent.iterator.FluentIterator;
+import com.lexicalscope.fluent.list.FluentList;
+import com.lexicalscope.fluent.map.DefaultMapEntry;
+import com.lexicalscope.fluent.map.FluentMap;
+import com.lexicalscope.fluent.map.transforms.MapPipelineBuilder;
 
 /*
  * Copyright 2012 Tim Wood
@@ -66,7 +66,9 @@ public class FluentDollar {
        return new FluentIterator<V>(iterator);
     }
 
-    public <K, V> FluentMap<K, V> map(final Class<K> key, final Class<V> value) {
+    public <K, V> FluentMap<K, V> map(
+    		@SuppressWarnings("unused") final Class<K> key,
+    		@SuppressWarnings("unused") final Class<V> value) {
         return $(new LinkedHashMap<K, V>());
     }
 
@@ -74,11 +76,11 @@ public class FluentDollar {
        return $(new LinkedHashMap<K, V>());
     }
 
-    public <V> FluentList<V> list(final Class<V> value) {
+    public <V> FluentList<V> list(@SuppressWarnings("unused") final Class<V> value) {
         return $(new ArrayList<V>());
     }
 
-    public <V> FluentList<V> asList(final V ... values)
+    public <V> FluentList<V> asList(@SuppressWarnings("unchecked") final V ... values)
     {
        return $(Arrays.asList(values));
     }
