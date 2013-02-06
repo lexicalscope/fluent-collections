@@ -4,7 +4,15 @@
 //
 package com.lexicalscope.fluent.list;
 
-import static com.lexicalscope.fluent.FluentDollar.$;
+import static com.lexicalscope.fluent.FluentDollar.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import org.hamcrest.Matcher;
+
 import ch.lambdaj.Lambda;
 import ch.lambdaj.collection.LambdaCollections;
 import ch.lambdaj.collection.LambdaGroup;
@@ -21,28 +29,37 @@ import com.lexicalscope.fluent.adapters.ConverterFunction;
 import com.lexicalscope.fluent.collection.FluentCollection;
 import com.lexicalscope.fluent.map.FluentMap;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import org.hamcrest.Matcher;
-
+/**
+ * Please do not extend this class
+ *
+ * @author tim
+ */
 public class FluentList<T> extends ForwardingList<T>
 {
    private final List<T> list;
    private final LambdaList<T> lambdaList;
 
+   /**
+    * @param list its going to wrap this list
+    */
    public FluentList(final List<T> list)
    {
-      this.list = list;
-      if(list instanceof LambdaList)
+      if(list instanceof FluentList)
       {
-         this.lambdaList = (LambdaList<T>) list;
+         this.list = ((FluentList<T>) list).list;
+         this.lambdaList = ((FluentList<T>) list).lambdaList;
       }
       else
       {
-         this.lambdaList = LambdaCollections.with(list);
+         this.list = list;
+         if(list instanceof LambdaList)
+         {
+            this.lambdaList = (LambdaList<T>) list;
+         }
+         else
+         {
+            this.lambdaList = LambdaCollections.with(list);
+         }
       }
    }
 
@@ -68,46 +85,76 @@ public class FluentList<T> extends ForwardingList<T>
       return $(new ValueConvertingList<TN, T>(delegate(), forwardConverter, reverseConverter));
    }
 
-   public FluentList<T> _retain(final Matcher<?> matcher) {
+   public FluentList<T> $retain(final Matcher<?> matcher) {
        return $(lambdaList.retain(matcher));
    }
 
-   public FluentList<T> _remove(final Matcher<?> matcher) {
+   public FluentList<T> _retain(final Matcher<?> matcher) {
+      return _(lambdaList).$retain(matcher);
+   }
+
+   public FluentList<T> $remove(final Matcher<?> matcher) {
       return $(lambdaList.remove(matcher));
    }
 
-   public FluentList<T> _sort(final Object argument) {
-       return $(lambdaList.sort(argument));
+   public FluentList<T> _remove(final Matcher<?> matcher) {
+      return _(lambdaList).$remove(matcher);
+   }
+
+   public FluentList<T> $sort_lj(final Object argument) {
+      return $(lambdaList.sort(argument));
+   }
+
+   public FluentList<T> _sort_lj(final Object argument) {
+       return _(lambdaList).$sort_lj(argument);
    }
 
    public <TN> FluentList<TN> _convert(final Converter<T, TN> converter) {
       return $(lambdaList.convert(converter));
    }
 
-   public <V> FluentList<V> _extract(final V argument) {
+   public <V> FluentList<V> _extract_lj(final V argument) {
       return $(lambdaList.extract(argument));
    }
 
-   public FluentList<T> _replace(final Matcher<?> matcher, final T replacer) {
+   public FluentList<T> $replace(final Matcher<?> matcher, final T replacer) {
       return $(lambdaList.replace(matcher, replacer));
    }
 
-   public FluentList<T> _distinct(final Object argument) {
+   public FluentList<T> _replace(final Matcher<?> matcher, final T replacer) {
+      return _(lambdaList).$replace(matcher, replacer);
+   }
+
+   public FluentList<T> $distinct_lj(final Object argument) {
       return $(lambdaList.distinct(argument));
+   }
+
+   public FluentList<T> _distinct_lj(final Object argument) {
+      return _(lambdaList).$distinct_lj(argument);
    }
 
    public <V> FluentList<V> _project(final Class<V> targetClass, final Object... arguments) {
       return $(lambdaList.project(targetClass, arguments));
    }
 
-   public T _joinFrom()
+   public T $joinFrom()
    {
       return lambdaList.joinFrom();
    }
 
-   public T _joinFrom(final String separator)
+   public T _joinFrom()
+   {
+      return _(lambdaList).$joinFrom();
+   }
+
+   public T $joinFrom(final String separator)
    {
       return lambdaList.joinFrom(separator);
+   }
+
+   public T _joinFrom(final String separator)
+   {
+      return _(lambdaList).$joinFrom(separator);
    }
 
    public T _aggregate(final Aggregator<T> aggregator)

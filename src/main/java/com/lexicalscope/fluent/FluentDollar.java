@@ -50,10 +50,24 @@ public class FluentDollar {
         return new FluentMap<K, V>(map);
     }
 
+    /**
+     * Wrap the list in a fluent list
+     *
+     * @param list the list to wrap
+     *
+     * @return fluent list backed by the given list
+     */
     public static <V> FluentList<V> $(final List<V> list){
        return new FluentList<V>(list);
     }
 
+    /**
+     * Copy the list into a fluent list
+     *
+     * @param list the list to copy
+     *
+     * @return a copy of the list as a fluent list
+     */
     public static <V> FluentList<V> _(final List<V> list){
        return $(Lists.newArrayList(list));
     }
