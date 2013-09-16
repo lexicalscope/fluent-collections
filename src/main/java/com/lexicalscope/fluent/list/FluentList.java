@@ -109,6 +109,9 @@ public class FluentList<T> extends ForwardingList<T>
        return _(lambdaList).$sort_lj(argument);
    }
 
+   /*
+    * anything that convert a super type of t should work? Perhaps submit a patch to lambdaj
+    */
    public <TN> FluentList<TN> _convert(final Converter<T, TN> converter) {
       return $(lambdaList.convert(converter));
    }
